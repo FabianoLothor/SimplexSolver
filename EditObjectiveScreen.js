@@ -42,8 +42,22 @@ export default class EditObjectiveScreen extends Component {
   }
 
   pickerItens(key) {
+  	possibleItens = [1,2,3,4,5];
+  	for (item in possibleItens ) {
+  		if(item[possibleItens] != this.state.objective.vars[key].key) {
+  			for (varObj in this.state.objective.vars) {
+  				console.log(this.state.objective.vars[varObj].key);
+  				if(item[possibleItens] == this.state.objective.vars[varObj].key) {
+  					possibleItens.splice(item - 1, 1);
+  				}
+  			}
+  		}
+
+  		console.log(possibleItens);
+  	}
+
   	return (
-  		[1,2,3,4,5].map((x) => {
+  		possibleItens.map((x) => {
 	  		return (
 	  			<Picker.Item label={ 'x' + x } value={ x } />
 				)
