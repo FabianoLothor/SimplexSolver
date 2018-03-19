@@ -17,6 +17,12 @@ export default class EditObjectiveScreen extends Component {
     this.state = this.props.navigation.state.params;
   }
 
+  addVar() {
+    this.state.objective.vars.push({ key: 1, value: 1 });
+
+    this.forceUpdate();
+  }
+
   inputTextChanged(text, key) {
   	value = parseInt(text);
 
@@ -31,7 +37,7 @@ export default class EditObjectiveScreen extends Component {
 
   pickerChanged(picker, key) {
 		this.state.objective.vars[key].key = picker;
-		
+
 		this.forceUpdate();
   }
 
@@ -98,7 +104,14 @@ export default class EditObjectiveScreen extends Component {
 	          })}
             <View style={ styles.options }>
 		          <View style={[ styles.mainButton ]}>
-		            <Button color='#5FBA7D' onPress={ this._onPress } title='ADD VAR' />
+		            <Button
+		            	color='#5FBA7D'
+			            onPress={
+		                () => { this.addVar() }
+		              }
+		              title='ADD VAR'
+		              disabled={ this.state.objective.vars.length > 4 }
+	              />
 		          </View>
 		        </View>
 	        </View>
