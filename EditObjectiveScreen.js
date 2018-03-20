@@ -18,12 +18,47 @@ export default class EditObjectiveScreen extends Component {
   }
 
   addVar() {
-    this.state.objective.vars.push({ key: 1, value: 1 });
+    this.state.objective.vars.push({ key: this.getPossibleVars(-1)[0], value: 1 });
 
     this.forceUpdate();
   }
 
-  inputTextChanged(text, key) {
+  removeVar(varKey) {
+    this.state.objective.vars.splice(varKey, 1);
+
+    this.forceUpdate();
+  }
+
+  getPossibleVars(key) {
+		possibleItens = [1,2,3,4,5,6,7];
+    finalItems = [];
+
+  	for (var index = 0;index < this.state.objective.vars.length;++index) {
+  		if(key < 0) {
+        possibleItens = possibleItens.filter(e => e !== this.state.objective.vars[index].key);
+  		} else {
+        if(this.state.objective.vars[key].key !== this.state.objective.vars[index].key) {
+          finded = possibleItens.indexOf(this.state.objective.vars[index].key);
+        
+          if(finded > -1) {
+            possibleItens.splice(finded, 1);
+          }
+        } else {
+          finalItems.push(this.state.objective.vars[key].key);
+        }
+      }
+  	}
+
+    finalItems = key < 0 ? possibleItens : finalItems.concat(possibleItens.filter(item => !finalItems.includes(item)));
+
+  	return finalItems;
+  }
+
+  inputTextChanged(text, key) { 
+    if(text.indexOf('-') > -1) {
+      text = '-' + text.replace('-', '');
+    }
+
   	value = parseInt(text);
 
   	if (isNaN(value)) {
@@ -42,24 +77,10 @@ export default class EditObjectiveScreen extends Component {
   }
 
   pickerItens(key) {
-  	possibleItens = [1,2,3,4,5];
-  	for (item in possibleItens ) {
-  		if(item[possibleItens] != this.state.objective.vars[key].key) {
-  			for (varObj in this.state.objective.vars) {
-  				console.log(this.state.objective.vars[varObj].key);
-  				if(item[possibleItens] == this.state.objective.vars[varObj].key) {
-  					possibleItens.splice(item - 1, 1);
-  				}
-  			}
-  		}
-
-  		console.log(possibleItens);
-  	}
-
   	return (
-  		possibleItens.map((x) => {
+  		this.getPossibleVars(key).map((x) => {
 	  		return (
-	  			<Picker.Item label={ 'x' + x } value={ x } />
+	  			<Picker.Item key={ key } label={ 'x' + x } value={ x } />
 				)
   		})
 		);
@@ -72,7 +93,6 @@ export default class EditObjectiveScreen extends Component {
   }
 
   render() {
-  	const maxVars = 5;
   	const nav = this.props.navigation;
 
     return (
@@ -88,7 +108,7 @@ export default class EditObjectiveScreen extends Component {
 	              <Button
 	                color='#5FBA7D'
 	                onPress={
-	                  () => nav.navigate('Home', { objective: this.state.objective })
+	                  () => nav.navigate('Home')
 	                }
 	                title='✔'
 	              />
@@ -97,22 +117,32 @@ export default class EditObjectiveScreen extends Component {
 	        </View>
 	        <View style={ styles.informations }>
 	        	<Picker onValueChange={ (picker) => this.objectivePickerChanged(picker) } selectedValue={ this.state.objective.maximize }>
-               <Picker.Item label='MAXIMIZE' value={ true } />
-               <Picker.Item label="MINIMIZE" value={ false } />
+              <Picker.Item label='MAXIMIZE' value={ true } />
+              <Picker.Item label="MINIMIZE" value={ false } />
             </Picker>
             { this.state.objective.vars.map((x, key) => {
 	            return (
 	              <View key={ key } style={ styles.restrictions }>
 	              	<TextInput
-	              		keyboardType='numeric'
 	              		maxLength={ 7 }
+                    keyboardType='numeric'
 	              		style={ styles.inputsTextEdit }
 	              		value={ this.state.objective.vars[key].value + '' }
       		          onChangeText={ (text) => this.inputTextChanged(text, key) }
               		/>
-              		<Picker style={[ { width:'25%' } ]} onValueChange={ (picker) => this.pickerChanged(picker, key) } selectedValue={ this.state.objective.vars[key].key }>
+              		<Picker style={[ { width:'20%' } ]} onValueChange={ (picker) => this.pickerChanged(picker, key) } selectedValue={ this.state.objective.vars[key].key }>
 			               { this.pickerItens(key) }
 			            </Picker>
+                  <View style={[ styles.buttons ]}>
+                    <Button
+                      color='#C04848'
+                      onPress={
+                        () => { this.removeVar(key) }
+                      }
+                      title='✘'
+                      disabled={ this.state.objective.vars.length == 1 }
+                    />
+                  </View>
 	              </View>
 	            );
 	          })}
@@ -124,7 +154,7 @@ export default class EditObjectiveScreen extends Component {
 		                () => { this.addVar() }
 		              }
 		              title='ADD VAR'
-		              disabled={ this.state.objective.vars.length > 4 }
+		              disabled={ this.state.objective.vars.length > 6 }
 	              />
 		          </View>
 		        </View>

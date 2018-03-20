@@ -21,7 +21,7 @@ export const getFunction = function(vars) {
     strFunction += 
       ( key > 0 && vars[key].value > -1 ? '+' : '') +
       ( vars[key].value != 1 ? vars[key].value : '' ) +
-      ( 'x' + (vars[key].key) ) + ' ';
+      ( 'x' + (vars[key].key) ) + '';
   }
 
   return strFunction;
@@ -30,11 +30,11 @@ export const getFunction = function(vars) {
 export const getRestriction = function(restriction) {
   expression = '';
 
-  expression += getFunction(restriction.vars);
+  expression += getFunction(restriction.vars) + ' ';
 
-  if(!restriction.bigger && !restriction.less) {
+  if(!restriction.greater && !restriction.less) {
     expression += '=';
-  } else if (restriction.bigger) {
+  } else if (restriction.greater) {
     expression += '≥';
   } else {
     expression += '≤';

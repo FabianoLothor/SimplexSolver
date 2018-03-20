@@ -15,7 +15,7 @@ const initialState = {
     vars: [{ key: 1, value: 1 }],
   },
   restrictions: [{
-    bigger: false,
+    greater: false,
     less: true,
     result: 1,
     vars: [{ key: 1, value: 1 }],
@@ -30,9 +30,8 @@ export default class HomeScreen extends Component {
   }
 
   addRestriction() {
-    console.log(this);
     this.state.restrictions.push({
-      bigger: false,
+      greater: false,
       less: true,
       result: 1,
       vars: [{ key: 1, value: 1 }],
@@ -47,6 +46,10 @@ export default class HomeScreen extends Component {
     this.forceUpdate();
   }
 
+  solveSimplex() {
+    console.log(JSON.stringify(this.state));
+  }
+
   render() {
     const nav = this.props.navigation;
 
@@ -57,7 +60,9 @@ export default class HomeScreen extends Component {
             addRestriction:
             () => { this.addRestriction() },
             removeRestriction:
-              restrictionKey => { this.removeRestriction(restrictionKey) }
+              restrictionKey => { this.removeRestriction(restrictionKey) },
+            solveSimplex:
+              () => { this.solveSimplex() },
           }}
           nav={ nav }
           objective={ this.state.objective }

@@ -24,7 +24,7 @@ export default class Resolution extends Component {
                     <Button
                       color='#F69C55'
                       onPress={
-                        () => this.props.nav.navigate('EditRestriction', { restrictionKey: key, restriction: this.props.restriction })
+                        () => this.props.nav.navigate('EditRestriction', { restrictionKey: key, restriction: restriction })
                       }
                       title='✎'
                     />
@@ -49,13 +49,18 @@ export default class Resolution extends Component {
                 () => { this.props.callbacks.addRestriction() }
               }
               title='ADD RESTRICTION'
-              disabled={ this.props.restrictions.length > 4 }
+              disabled={ this.props.restrictions.length > 6 }
             />
           </View>
         </View>
         <View style={ styles.options }>
           <View style={[ styles.mainButton ]}>
-            <Button color='#0095FF' onPress={ this._onPress } title='SOLVE' />
+            <Button
+            color='#0095FF'
+            onPress={
+              () => { this.props.callbacks.solveSimplex() }
+            }
+            title='SOLVE' />
           </View>
         </View>
       </View>
