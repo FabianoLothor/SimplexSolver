@@ -19,7 +19,7 @@ export default class EditRestrictionScreen extends Component {
 
   addVar() {
     this.state.restriction.vars.push({ key: this.getPossibleVars(-1)[0], value: 1 });
-
+    
     this.forceUpdate();
   }
 
@@ -34,7 +34,8 @@ export default class EditRestrictionScreen extends Component {
   }
 
   getPossibleVars(key) {
-    possibleItens = [1,2,3,4,5,6,7];
+    possibleItens = this.state.possibleVars.slice();
+
     finalItems = [];
 
     for (var index = 0;index < this.state.restriction.vars.length;++index) {
@@ -149,7 +150,7 @@ export default class EditRestrictionScreen extends Component {
                     value={ this.state.restriction.vars[key].value + '' }
                     onChangeText={ (text) => this.inputTextChanged(text, key) }
                   />
-                  <Picker style={[ { width:'20%' } ]} onValueChange={ (picker) => this.pickerChanged(picker, key) } selectedValue={ this.state.restriction.vars[key].key }>
+                  <Picker style={[ { width:'30%' } ]} onValueChange={ (picker) => this.pickerChanged(picker, key) } selectedValue={ this.state.restriction.vars[key].key }>
                      { this.pickerItens(key) }
                   </Picker>
                   <View style={[ styles.buttons ]}>
@@ -190,7 +191,7 @@ export default class EditRestrictionScreen extends Component {
                     () => { this.addVar() }
                   }
                   title='ADD VAR'
-                  disabled={ this.state.restriction.vars.length > 6 }
+                  disabled={ this.state.restriction.vars.length === this.state.possibleVars.length }
                 />
               </View>
             </View>

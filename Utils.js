@@ -27,10 +27,20 @@ export const getFunction = function(vars) {
   return strFunction;
 }
 
-export const getRestriction = function(restriction) {
-  expression = '';
+export const getPossibleVars = function(possibilites) {
+  sortByObjectKey(possibilites, 'key');
 
-  expression += getFunction(restriction.vars) + ' ';
+  return possibilites.map(i => i.key);
+}
+
+export const getRestriction = function(restriction, possibilites) {
+  expression = '';
+  
+  if(typeof possibilites === 'undefined') {
+    expression += getFunction(restriction.vars) + ' ';
+  } else {
+    expression += possibilites.map(i => ' ' + 'x' + i) + ' ';
+  }
 
   if(!restriction.greater && !restriction.less) {
     expression += '=';
@@ -42,5 +52,5 @@ export const getRestriction = function(restriction) {
 
   expression += ' ' + restriction.result;
 
-  return expression;
+  return expression.trim();
 }

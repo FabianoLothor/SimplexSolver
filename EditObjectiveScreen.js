@@ -130,7 +130,7 @@ export default class EditObjectiveScreen extends Component {
 	              		value={ this.state.objective.vars[key].value + '' }
       		          onChangeText={ (text) => this.inputTextChanged(text, key) }
               		/>
-              		<Picker style={[ { width:'20%' } ]} onValueChange={ (picker) => this.pickerChanged(picker, key) } selectedValue={ this.state.objective.vars[key].key }>
+              		<Picker style={[ { width:'30%' } ]} onValueChange={ (picker) => this.pickerChanged(picker, key) } selectedValue={ this.state.objective.vars[key].key }>
 			               { this.pickerItens(key) }
 			            </Picker>
                   <View style={[ styles.buttons ]}>

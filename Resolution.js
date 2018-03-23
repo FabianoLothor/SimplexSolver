@@ -18,15 +18,16 @@ export default class Resolution extends Component {
             return (
               <View key={ key } style={ styles.restrictions }>
                 <Text style={[ styles.label, styles.restriction, styles.texts ]}>RESTRICTION { key + 1 }</Text>
-                <Text style={[ styles.expression, styles.restriction, styles.texts ]}>{ getRestriction(restriction) }</Text>
+                <Text style={[ styles.expression, styles.restriction, styles.texts ]}>{ key === 0 ? getRestriction(restriction, this.props.possibleVars) : getRestriction(restriction) }</Text>
                 <View style={[ styles.buttons ]}>
                   <View style={[ styles.buttonEdit ]}>
                     <Button
                       color='#F69C55'
                       onPress={
-                        () => this.props.nav.navigate('EditRestriction', { restrictionKey: key, restriction: restriction })
+                        () => this.props.nav.navigate('EditRestriction', { restrictionKey: key, restriction: restriction, possibleVars : this.props.possibleVars })
                       }
                       title='✎'
+                      disabled={ key === 0 }
                     />
                   </View>
                   <Button
@@ -35,7 +36,7 @@ export default class Resolution extends Component {
                       () => { this.props.callbacks.removeRestriction(key) }
                     }
                     title='✘'
-                    disabled={ this.props.restrictions.length == 1 }
+                    disabled={ key === 0 }
                   />
                 </View>
               </View>

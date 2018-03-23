@@ -17,7 +17,7 @@ const initialState = {
   restrictions: [{
     greater: false,
     less: true,
-    result: 1,
+    result: 0,
     vars: [{ key: 1, value: 1 }],
   }],
 };
@@ -34,7 +34,7 @@ export default class HomeScreen extends Component {
       greater: false,
       less: true,
       result: 1,
-      vars: [{ key: 1, value: 1 }],
+      vars: [{ key: this.state.objective.vars[0].key, value: 1 }],
     });
 
     this.forceUpdate();
@@ -47,7 +47,11 @@ export default class HomeScreen extends Component {
   }
 
   solveSimplex() {
+    firstRestriction = this.state.restrictions.shift();
+    
     console.log(JSON.stringify(this.state));
+
+    this.state.restrictions.unshift(firstRestriction);
   }
 
   render() {

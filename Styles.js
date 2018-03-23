@@ -41,7 +41,7 @@ export default StyleSheet.create({
   },
   inputsTextEdit: {
     textAlign: 'right',
-    width: '60%',
+    width: '50%',
   },
   label: {
     color: '#242729',

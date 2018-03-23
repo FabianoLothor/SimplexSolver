@@ -9,7 +9,7 @@ import {
 
 import Resolution from './Resolution';
 import styles from './Styles';
-import { getFunction } from './Utils';
+import { getFunction, getPossibleVars } from './Utils';
 
 export default class Expressions extends Component {
   render() {
@@ -36,6 +36,7 @@ export default class Expressions extends Component {
           callbacks={ this.props.callbacks }
           nav={ this.props.nav }
           restrictions={ this.props.restrictions }
+          possibleVars={ getPossibleVars(this.props.objective.vars) }
         />
       </View>
     );
