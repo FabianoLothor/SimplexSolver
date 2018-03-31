@@ -20,7 +20,7 @@ export const getFunction = function(vars) {
   for ( var key = 0;key < vars.length;++key ) {
     strFunction += 
       ( key > 0 && vars[key].value > -1 ? '+' : '') +
-      ( vars[key].value != 1 ? vars[key].value : '' ) +
+      ( vars[key].value != 1 ? vars[key].value == -1 ? '-' : vars[key].value : '' ) +
       ( 'x' + (vars[key].key) ) + '';
   }
 
