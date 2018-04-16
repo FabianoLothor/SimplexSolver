@@ -17,7 +17,7 @@ export default class Resolution extends Component {
           { this.props.restrictions.map((restriction, key) => {
             return (
               <View key={ key } style={ styles.restrictions }>
-                <Text style={[ styles.label, styles.restriction, styles.texts ]}>RESTRICTION { key + 1 }</Text>
+                <Text style={[ styles.label, styles.restriction, styles.texts ]}>CONSTRAINT { key + 1 }</Text>
                 <Text style={[ styles.expression, styles.restriction, styles.texts ]}>{ key === 0 ? getRestriction(restriction, this.props.possibleVars) : getRestriction(restriction) }</Text>
                 <View style={[ styles.buttons ]}>
                   <View style={[ styles.buttonEdit ]}>
@@ -49,7 +49,7 @@ export default class Resolution extends Component {
               onPress={
                 () => { this.props.callbacks.addRestriction() }
               }
-              title='ADD RESTRICTION'
+              title='ADD CONSTRAINT'
               disabled={ this.props.restrictions.length > 6 }
             />
           </View>
@@ -57,11 +57,13 @@ export default class Resolution extends Component {
         <View style={ styles.options }>
           <View style={[ styles.mainButton ]}>
             <Button
-            color='#0095FF'
-            onPress={
-              () => { this.props.callbacks.solveSimplex() }
-            }
-            title='SOLVE' />
+              color='#0095FF'
+              onPress={
+                () => { this.props.callbacks.solveSimplex() }
+              }
+              title='SOLVE'
+              disabled={ this.props.restrictions.length < 2 }
+            />
           </View>
         </View>
       </View>

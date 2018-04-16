@@ -70,6 +70,13 @@ export default StyleSheet.create({
     flexDirection: 'row',
     height: '10%',
   },
+  results: {
+    color: '#242729',
+    marginLeft: 10,
+    marginRight: -10,
+    textAlign: 'left',
+    width: '80%',
+  },
   texts: {
     padding: 5,
   },

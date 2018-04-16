@@ -25,7 +25,7 @@ export default class Expressions extends Component {
               <Button
                 color='#F69C55'
                 onPress={
-                  () => this.props.nav.navigate('EditObjective', { objective: this.props.objective })
+                  () => this.props.nav.navigate('EditObjective', { objective: this.props.objective, restrictions: this.props.restrictions })
                 }
                 title='✎'
               />

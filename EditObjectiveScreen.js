@@ -23,6 +23,19 @@ export default class EditObjectiveScreen extends Component {
     this.forceUpdate();
   }
 
+  canRemove(varObj) {
+    var restrictions = this.state.restrictions.slice().splice(1);
+    for(restriction in restrictions) {
+      for(variable in restrictions[restriction].vars) {
+        if(varObj.key == restrictions[restriction].vars[variable].key) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   removeVar(varKey) {
     this.state.objective.vars.splice(varKey, 1);
 
@@ -140,7 +153,7 @@ export default class EditObjectiveScreen extends Component {
                         () => { this.removeVar(key) }
                       }
                       title='✘'
-                      disabled={ this.state.objective.vars.length == 1 }
+                      disabled={ this.state.objective.vars.length == 1 || !this.canRemove(x) }
                     />
                   </View>
 	              </View>

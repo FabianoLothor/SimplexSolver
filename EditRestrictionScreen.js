@@ -84,6 +84,10 @@ export default class EditRestrictionScreen extends Component {
 
     if (isNaN(value)) {
       this.state.restriction.result = 0;
+    } else if (value < 0) {
+      alert("Negative numbers aren\'t accepted yet here!");
+
+      this.state.restriction.result = 0;
     } else {
       this.state.restriction.result = value;
     }
@@ -123,7 +127,7 @@ export default class EditRestrictionScreen extends Component {
       <View style={ styles.container }>
         <View style={ styles.expressions }>
           <View style={ styles.highlights }>
-            <Text style={[ styles.label, styles.highlight, styles.texts ]}>RESTRICTION { this.state.restrictionKey + 1 }</Text>
+            <Text style={[ styles.label, styles.highlight, styles.texts ]}>CONSTRAINT { this.state.restrictionKey + 1 }</Text>
             <Text style={[ styles.expression, styles.highlight, styles.texts ]}>
               { getRestriction(this.state.restriction) }
             </Text>

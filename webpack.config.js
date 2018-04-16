@@ -19,7 +19,7 @@ var config = {
     open: true,
     historyApiFallback: true,
     inline: true
-  }
+  },
 };
 
 module.exports = config;
